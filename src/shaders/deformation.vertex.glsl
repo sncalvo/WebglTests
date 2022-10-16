@@ -21,12 +21,12 @@ void main(void) {
   // Produce waves by modifying the vertex position
   vec3 vertexPosition = aVertexPosition;
   float timeModifier = sin(uTotalTime) + cos(uTotalTime) * cos(uTotalTime);
-  vertexPosition.y += sin(vertexPosition.x * 10.0 + timeModifier * 3.0) * 0.1;
-  vertexPosition.y += sin(vertexPosition.z * 10.0 + timeModifier * 3.0) * 0.1;
+  vertexPosition.y += cos(vertexPosition.x * 10.0 + timeModifier * 3.0) * 0.05;
+  vertexPosition.y += cos(vertexPosition.z * 10.0 + timeModifier * 3.0) * 0.05;
 
   // Add different directions
-  vertexPosition.y += sin(vertexPosition.x * 10.0 - timeModifier * 3.0) * 0.1;
-  vertexPosition.x += sin(vertexPosition.z * 10.0 - timeModifier * timeModifier * 3.0) * 0.1;
+  vertexPosition.y += sin(vertexPosition.x * 10.0 - timeModifier * 3.0) * 0.05;
+  vertexPosition.x += sin(vertexPosition.z * 10.0 - timeModifier * timeModifier * 3.0) * 0.05;
   vertexPosition.z += cos(vertexPosition.y * 10.0 - timeModifier * 3.0) * 0.1;
 
   // Transform the vertex position to clip space
@@ -44,5 +44,5 @@ void main(void) {
   // Apply color effect base on height from center of vertex
   float height = length(vertexPosition);
   height = height * height * height * height;
-  vHighColor = vec3(height, 0.0, 1.0 / height);
+  vHighColor = vec3(cos(height), sin(height) / 3.0, 1.0 / height);
 }
