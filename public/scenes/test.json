@@ -1,0 +1,61 @@
+{
+  "cameras": [
+    {
+      "fieldOfView": 45,
+      "near": 0.1,
+      "far": 100.0,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "entities": [
+    {
+      "name": "Cube",
+      "model": "/assets/cube.gltf",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "behaviours": [{ "name": "MovementBehaviour", "properties": { "speed": 1.0 } }]
+    },
+    {
+      "name": "Plane",
+      "model": "/assets/plane.gltf",
+      "position": {
+        "x": 0,
+        "y": -1,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 3,
+        "y": 1,
+        "z": 3
+      },
+      "behaviours": []
+    }
+  ]
+}
