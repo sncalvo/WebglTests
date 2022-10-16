@@ -1,10 +1,12 @@
 import Behaviour from './Behaviour';
 
 class Entity {
-  private behaviours: Behaviour[] = [];
+  protected behaviours: Behaviour[] = [];
+
   public addBehaviour(behaviour: Behaviour) {
     this.behaviours.push(behaviour);
   }
+
   public async loadBehaviour(url: string, properties: any) {
     const behaviour = await import(`./scripts/${url}.ts`);
 

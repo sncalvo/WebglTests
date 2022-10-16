@@ -31,6 +31,10 @@ class DrawableEntity extends Entity implements Drawable {
 
     await Promise.all(promises);
 
+    for (let i = 0; i < entityInstance.behaviours.length; i++) {
+      entityInstance.behaviours[i].transform = model.transform;
+    }
+
     return entityInstance;
   }
 

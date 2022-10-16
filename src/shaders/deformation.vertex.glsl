@@ -20,8 +20,14 @@ varying highp vec3 vHighColor;
 void main(void) {
   // Produce waves by modifying the vertex position
   vec3 vertexPosition = aVertexPosition;
-  vertexPosition.y += sin(vertexPosition.x * 10.0 + uTotalTime * 3.0) * 0.1;
-  vertexPosition.y += sin(vertexPosition.z * 10.0 + uTotalTime * 3.0) * 0.1;
+  float timeModifier = sin(uTotalTime) + cos(uTotalTime) * cos(uTotalTime);
+  vertexPosition.y += sin(vertexPosition.x * 10.0 + timeModifier * 3.0) * 0.1;
+  vertexPosition.y += sin(vertexPosition.z * 10.0 + timeModifier * 3.0) * 0.1;
+
+  // Add different directions
+  vertexPosition.y += sin(vertexPosition.x * 10.0 - timeModifier * 3.0) * 0.1;
+  vertexPosition.x += sin(vertexPosition.z * 10.0 - timeModifier * timeModifier * 3.0) * 0.1;
+  vertexPosition.z += cos(vertexPosition.y * 10.0 - timeModifier * 3.0) * 0.1;
 
   // Transform the vertex position to clip space
   gl_Position = uProjectionMatrix * uViewMatrix * uModelViewMatrix * vec4(vertexPosition, 1.0);
@@ -37,5 +43,6 @@ void main(void) {
 
   // Apply color effect base on height from center of vertex
   float height = length(vertexPosition);
-  vHighColor = vec3(height * height, 0.0, 1.0 / height * height);
+  height = height * height * height * height;
+  vHighColor = vec3(height, 0.0, 1.0 / height);
 }

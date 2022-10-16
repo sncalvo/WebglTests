@@ -34,7 +34,10 @@
         "x": 1.5,
         "y": 1.5,
         "z": 1.5
-      }
+      },
+      "behaviours": [
+        { "name": "RotateBehaviour", "properties": { "speed": 0.00025, "friction": 10.0 } }
+      ]
     }
   ],
   "lights": [
