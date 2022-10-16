@@ -3,11 +3,13 @@ import Entity from './Entity';
 import DrawableEntity from './DrawableEntity';
 
 import Drawable from './Drawable';
+import Light from './Light';
 
 class Scene {
   private entities: Entity[] = [];
   private drawables: Drawable[] = [];
   private cameras: Camera[] = [];
+  private lights: Light[] = [];
   private activeCamera?: number;
 
   constructor() {}
@@ -22,6 +24,7 @@ class Scene {
 
     for (let i = 0; i < data.cameras.length; i++) {
       const camera = data.cameras[i];
+
       const cameraInstance = new Camera({ ...camera, aspect: gl.canvas.width / gl.canvas.height });
 
       for (let j = 0; j < camera.behaviours?.length ?? 0; j++) {
@@ -36,6 +39,18 @@ class Scene {
       }
 
       scene.addCamera(cameraInstance);
+    }
+
+    for (let i = 0; i < data.lights?.length ?? 0; i++) {
+      const light = data.lights[i];
+      const lightInstance = new Light(
+        light.position,
+        light.diffuseColor,
+        light.ambientColor,
+        light.intensity
+      );
+
+      scene.lights.push(lightInstance);
     }
 
     const drawablesPromise: Promise<DrawableEntity>[] = [];
@@ -57,6 +72,12 @@ class Scene {
     }
 
     return scene;
+  }
+
+  public resize(width: number, height: number) {
+    for (let i = 0; i < this.cameras.length; i++) {
+      this.cameras[i].updateAspectRatio(width / height);
+    }
   }
 
   public addEntity(entity: Entity) {
@@ -102,6 +123,7 @@ class Scene {
       drawable.draw(
         activeCamera.projectionMatrix,
         activeCamera.transform.asViewMatrix(),
+        this.lights[0],
         totalTime
       );
     }

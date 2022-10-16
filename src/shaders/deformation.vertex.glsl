@@ -8,6 +8,11 @@ uniform mat4 uProjectionMatrix;
 uniform mat4 uViewMatrix;
 uniform float uTotalTime;
 
+uniform vec3 uLightPosition;
+uniform vec3 uAmbientLightColor;
+uniform vec3 uDiffuseLightColor;
+uniform float uLightIntensity;
+
 varying highp vec2 vTextureCoord;
 varying highp vec3 vLighting;
 varying highp vec3 vHighColor;
@@ -24,15 +29,13 @@ void main(void) {
   vTextureCoord = aTextureCoord;
 
   // Apply lighting effect
-  highp vec3 ambientLight = vec3(0.1, 0.1, 0.1);
-  highp vec3 directionalLightColor = vec3(1, 1, 1);
-  highp vec3 directionalVector = normalize(vec3(0.85, 0.8, 0.75));
+  highp vec3 directionalVector = normalize(uLightPosition - (uModelViewMatrix * vec4(vertexPosition, 1.0)).xyz);
   highp vec4 transformedNormal = uNormalMatrix * vec4(aVertexNormal, 1.0);
   highp float directional = max(dot(transformedNormal.xyz, directionalVector), 0.0);
 
-  vLighting = ambientLight + (directionalLightColor * directional);
+  vLighting = uAmbientLightColor + (uDiffuseLightColor * directional);
 
   // Apply color effect base on height from center of vertex
   float height = length(vertexPosition);
-  vHighColor = vec3(height * height, 0.0, 1.0 / height);
+  vHighColor = vec3(height * height, 0.0, 1.0 / height * height);
 }

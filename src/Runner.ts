@@ -7,6 +7,13 @@ class Runner {
   constructor(canvas: HTMLCanvasElement, scene: Scene) {
     this.gl = canvas.getContext('webgl')!;
     this.scene = scene;
+
+    window.addEventListener('resize', () => {
+      canvas.height = canvas.clientHeight;
+      canvas.width = canvas.clientWidth;
+
+      scene.resize(this.gl.canvas.width, this.gl.canvas.height);
+    });
   }
 
   public start() {}

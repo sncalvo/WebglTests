@@ -5,6 +5,10 @@ main();
 
 async function main() {
   const canvas = document.getElementById('glCanvas') as HTMLCanvasElement;
+
+  canvas.height = canvas.clientHeight;
+  canvas.width = canvas.clientWidth;
+
   const gl = canvas.getContext('webgl')!;
 
   const sceneFromFile = await Scene.createFromFile(gl, '/scenes/deformation.json');

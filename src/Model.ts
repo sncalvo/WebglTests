@@ -1,5 +1,6 @@
 import { mat4 } from 'gl-matrix';
 import { loadModel } from 'webgl-gltf';
+import Light from './Light';
 import Mesh from './Mesh';
 import Transform from './Transform';
 
@@ -15,11 +16,11 @@ class Model {
     this.transform = new Transform();
   }
 
-  public draw(projectionMatrix: mat4, viewMatrix: mat4, totalTime: number) {
+  public draw(projectionMatrix: mat4, viewMatrix: mat4, light: Light, totalTime: number) {
     for (let i = 0; i < this.meshes.length; i++) {
       const mesh = this.meshes[i];
 
-      mesh.draw(projectionMatrix, viewMatrix, this.transform, totalTime);
+      mesh.draw(projectionMatrix, viewMatrix, this.transform, light, totalTime);
     }
   }
 

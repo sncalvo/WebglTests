@@ -46,6 +46,12 @@ class Camera extends Entity {
     this.updateViewMatrix();
   }
 
+  public updateAspectRatio(aspect: number) {
+    this.aspect = aspect;
+    this.projectionMatrix = mat4.create();
+    this.updateProjectionMatrix();
+  }
+
   private updateProjectionMatrix() {
     mat4.perspective(this.projectionMatrix, this.fieldOfView, this.aspect, this.near, this.far);
   }

@@ -4,6 +4,7 @@ import Material from './materials/Material';
 import DeformationMaterial from './materials/DeformationMaterial';
 import Transform from './Transform';
 import { Basic2Material } from './materials/BasicMaterials';
+import Light from './Light';
 
 class Mesh {
   private gl: WebGLRenderingContext;
@@ -38,6 +39,7 @@ class Mesh {
     projectionMatrix: mat4,
     viewMatrix: mat4,
     parentTransform: Transform,
+    light: Light,
     totalTime: number
   ) {
     const modelMatrix = mat4.create();
@@ -57,6 +59,7 @@ class Mesh {
         uNormalMatrix: normalMatrix,
         uViewMatrix: viewMatrix,
         uTotalTime: totalTime,
+        ...light.uniforms,
       },
     });
 
