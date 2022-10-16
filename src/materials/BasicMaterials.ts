@@ -1,12 +1,13 @@
-import fsSource from './shaders/basic.fragment.glsl?raw';
-import fsSource2 from './shaders/basic2.fragment.glsl?raw';
-import vsSource from './shaders/basic.vertex.glsl?raw';
-import vsSource2 from './shaders/basic2.vertex.glsl?raw';
+import fsSource from '../shaders/basic.fragment.glsl?raw';
+import fsSource2 from '../shaders/basic2.fragment.glsl?raw';
+import vsSource from '../shaders/basic.vertex.glsl?raw';
+import vsSource2 from '../shaders/basic2.vertex.glsl?raw';
 
-import Shader from './Shader';
-import Texture from './Texture';
+import Shader from '../Shader';
+import Texture from '../Texture';
+import Material from './Material';
 
-class BasicMaterial {
+class BasicMaterial implements Material {
   private texture: Texture[];
   protected shader: Shader;
 
@@ -27,7 +28,7 @@ class BasicMaterial {
   }
 }
 
-class Basic2Material extends BasicMaterial {
+class Basic2Material extends BasicMaterial implements Material {
   constructor(gl: WebGLRenderingContext, texture: Texture[]) {
     super(gl, texture);
 

@@ -1,7 +1,9 @@
 import { mat4 } from 'gl-matrix';
 import { GLBuffer } from 'webgl-gltf';
-import Material, { Basic2Material } from './Material';
+import Material from './materials/Material';
+import DeformationMaterial from './materials/DeformationMaterial';
 import Transform from './Transform';
+import { Basic2Material } from './materials/BasicMaterials';
 
 class Mesh {
   private gl: WebGLRenderingContext;
@@ -32,7 +34,12 @@ class Mesh {
     this.transform = new Transform();
   }
 
-  public draw(projectionMatrix: mat4, viewMatrix: mat4, parentTransform: Transform) {
+  public draw(
+    projectionMatrix: mat4,
+    viewMatrix: mat4,
+    parentTransform: Transform,
+    totalTime: number
+  ) {
     const modelMatrix = mat4.create();
     mat4.multiply(modelMatrix, parentTransform.model, this.transform.model);
     const normalMatrix = mat4.create();
@@ -49,6 +56,7 @@ class Mesh {
         uModelViewMatrix: modelMatrix,
         uNormalMatrix: normalMatrix,
         uViewMatrix: viewMatrix,
+        uTotalTime: totalTime,
       },
     });
 
@@ -62,8 +70,9 @@ class Mesh {
 
   public loadMaterial(_material: any) {
     // TODO: Load material attributes from material
-    const basicMaterial = new Basic2Material(this.gl, []);
-    this.material = basicMaterial;
+    // const material = new Basic2Material(this.gl, []);
+    const material = new DeformationMaterial(this.gl);
+    this.material = material;
   }
 }
 

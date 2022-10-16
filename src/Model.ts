@@ -15,11 +15,11 @@ class Model {
     this.transform = new Transform();
   }
 
-  public draw(projectionMatrix: mat4, viewMatrix: mat4) {
+  public draw(projectionMatrix: mat4, viewMatrix: mat4, totalTime: number) {
     for (let i = 0; i < this.meshes.length; i++) {
       const mesh = this.meshes[i];
 
-      mesh.draw(projectionMatrix, viewMatrix, this.transform);
+      mesh.draw(projectionMatrix, viewMatrix, this.transform, totalTime);
     }
   }
 

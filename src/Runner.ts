@@ -20,7 +20,7 @@ class Runner {
       then = now;
 
       this.update(deltaTime);
-      this.draw();
+      this.draw(then);
 
       requestAnimationFrame(render);
     };
@@ -31,7 +31,7 @@ class Runner {
     this.scene.update(deltaTime);
   }
 
-  private draw() {
+  private draw(totalTime: number) {
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
     this.gl.clearDepth(1.0);
     this.gl.enable(this.gl.DEPTH_TEST);
@@ -39,7 +39,7 @@ class Runner {
 
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-    this.scene.draw();
+    this.scene.draw(totalTime);
   }
 }
 

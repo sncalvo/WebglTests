@@ -22,7 +22,7 @@ class DrawableEntity extends Entity implements Drawable {
     model.transform.rotate(entity.rotation);
     model.transform.scale(entity.scale.x, entity.scale.y, entity.scale.z);
 
-    for (let j = 0; j < entity.behaviours.length; j++) {
+    for (let j = 0; j < entity.behaviours?.length ?? 0; j++) {
       const behaviour = entity.behaviours[j];
 
       promises.push(entityInstance.loadBehaviour(behaviour.name, behaviour.properties));
@@ -33,8 +33,8 @@ class DrawableEntity extends Entity implements Drawable {
     return entityInstance;
   }
 
-  public draw(projectionMatrix: mat4, viewMatrix: mat4) {
-    this.model?.draw(projectionMatrix, viewMatrix);
+  public draw(projectionMatrix: mat4, viewMatrix: mat4, totalTime: number) {
+    this.model?.draw(projectionMatrix, viewMatrix, totalTime);
   }
 }
 

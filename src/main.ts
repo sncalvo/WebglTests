@@ -7,7 +7,7 @@ async function main() {
   const canvas = document.getElementById('glCanvas') as HTMLCanvasElement;
   const gl = canvas.getContext('webgl')!;
 
-  const sceneFromFile = await Scene.createFromFile(gl, '/scenes/test.json');
+  const sceneFromFile = await Scene.createFromFile(gl, '/scenes/deformation.json');
 
   const runner = new Runner(canvas, sceneFromFile);
 

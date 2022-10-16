@@ -89,7 +89,7 @@ class Scene {
     }
   }
 
-  public draw() {
+  public draw(totalTime: number) {
     if (this.activeCamera === undefined) {
       return;
     }
@@ -99,7 +99,11 @@ class Scene {
     for (let i = 0; i < this.drawables.length; i++) {
       const drawable = this.drawables[i];
 
-      drawable.draw(activeCamera.projectionMatrix, activeCamera.transform.asViewMatrix());
+      drawable.draw(
+        activeCamera.projectionMatrix,
+        activeCamera.transform.asViewMatrix(),
+        totalTime
+      );
     }
   }
 }

@@ -25,6 +25,11 @@ class Shader {
   }
 
   public setUniform(name: string, value: any) {
+    if (!this.uniforms[name]) {
+      console.info(`Uniform ${name} not found`);
+      return;
+    }
+
     this.uniforms[name].value = value;
 
     try {

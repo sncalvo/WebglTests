@@ -1,0 +1,40 @@
+{
+  "cameras": [
+    {
+      "fieldOfView": 45,
+      "near": 0.1,
+      "far": 100.0,
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 6
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "entities": [
+    {
+      "name": "Sphere",
+      "model": "/assets/sphere.gltf",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1.5,
+        "y": 1.5,
+        "z": 1.5
+      }
+    }
+  ]
+}
