@@ -60,7 +60,7 @@ class Mesh {
     this.gl.drawElements(this.gl.TRIANGLES, vertexCount, type, offset);
   }
 
-  public loadMaterial(material: any) {
+  public loadMaterial(_material: any) {
     // TODO: Load material attributes from material
     const basicMaterial = new Basic2Material(this.gl, []);
     this.material = basicMaterial;
