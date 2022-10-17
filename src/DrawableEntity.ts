@@ -4,6 +4,7 @@ import Entity from './Entity';
 import Drawable from './Drawable';
 
 import Model from './Model';
+import Shader from './Shader';
 
 class DrawableEntity extends Entity implements Drawable {
   constructor(private model?: Model) {
@@ -33,8 +34,12 @@ class DrawableEntity extends Entity implements Drawable {
     return entityInstance;
   }
 
-  public draw(projectionMatrix: mat4, viewMatrix: mat4) {
-    this.model?.draw(projectionMatrix, viewMatrix);
+  public draw(projectionMatrix: mat4, viewMatrix: mat4, lightProjectionMatrix: mat4) {
+    this.model?.draw(projectionMatrix, viewMatrix, lightProjectionMatrix);
+  }
+
+  public drawShadow(projectionMatrix: mat4, viewMatrix: mat4, shader: Shader) {
+    this.model?.drawShadow(projectionMatrix, viewMatrix, shader);
   }
 }
 

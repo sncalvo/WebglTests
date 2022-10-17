@@ -35,7 +35,7 @@
         "y": 0.5,
         "z": 0.5
       },
-      "behaviours": [{ "name": "MovementBehaviour", "properties": { "speed": 1.0 } }]
+      "behaviours": [{ "name": "MovementBehaviour", "properties": { "speed": 5.0 } }]
     },
     {
       "name": "Plane",

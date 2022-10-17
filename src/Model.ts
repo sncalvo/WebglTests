@@ -1,6 +1,7 @@
 import { mat4 } from 'gl-matrix';
 import { loadModel } from 'webgl-gltf';
 import Mesh from './Mesh';
+import Shader from './Shader';
 import Transform from './Transform';
 
 class Model {
@@ -15,11 +16,19 @@ class Model {
     this.transform = new Transform();
   }
 
-  public draw(projectionMatrix: mat4, viewMatrix: mat4) {
+  public draw(projectionMatrix: mat4, viewMatrix: mat4, lightProjectionMatrix: mat4) {
     for (let i = 0; i < this.meshes.length; i++) {
       const mesh = this.meshes[i];
 
-      mesh.draw(projectionMatrix, viewMatrix, this.transform);
+      mesh.draw(projectionMatrix, viewMatrix, this.transform, lightProjectionMatrix);
+    }
+  }
+
+  public drawShadow(projectionMatrix: mat4, viewMatrix: mat4, shader: Shader) {
+    for (let i = 0; i < this.meshes.length; i++) {
+      const mesh = this.meshes[i];
+
+      mesh.drawShadow(projectionMatrix, viewMatrix, shader, this.transform);
     }
   }
 

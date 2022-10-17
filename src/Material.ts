@@ -35,5 +35,13 @@ class Basic2Material extends BasicMaterial {
   }
 }
 
+class CustomMaterial extends BasicMaterial {
+  constructor(gl: WebGLRenderingContext, shader: Shader) {
+    super(gl, []);
+
+    this.shader = shader;
+  }
+}
+
 export default BasicMaterial;
-export { Basic2Material };
+export { Basic2Material, CustomMaterial };

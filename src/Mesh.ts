@@ -1,6 +1,7 @@
 import { mat4 } from 'gl-matrix';
 import { GLBuffer } from 'webgl-gltf';
-import Material, { Basic2Material } from './Material';
+import Material, { Basic2Material, CustomMaterial } from './Material';
+import Shader from './Shader';
 import Transform from './Transform';
 
 class Mesh {
@@ -32,7 +33,12 @@ class Mesh {
     this.transform = new Transform();
   }
 
-  public draw(projectionMatrix: mat4, viewMatrix: mat4, parentTransform: Transform) {
+  public draw(
+    projectionMatrix: mat4,
+    viewMatrix: mat4,
+    parentTransform: Transform,
+    lightProjectionMatrix: mat4
+  ) {
     const modelMatrix = mat4.create();
     mat4.multiply(modelMatrix, parentTransform.model, this.transform.model);
     const normalMatrix = mat4.create();
@@ -49,6 +55,37 @@ class Mesh {
         uModelViewMatrix: modelMatrix,
         uNormalMatrix: normalMatrix,
         uViewMatrix: viewMatrix,
+        uTextureMatrix: lightProjectionMatrix,
+      },
+    });
+
+    this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+
+    const vertexCount = this.elementCount;
+    const type = this.gl.UNSIGNED_SHORT;
+    const offset = 0;
+    this.gl.drawElements(this.gl.TRIANGLES, vertexCount, type, offset);
+  }
+
+  public drawShadow(
+    projectionMatrix: mat4,
+    viewMatrix: mat4,
+    shader: Shader,
+    parentTransform: Transform
+  ) {
+    const modelMatrix = mat4.create();
+    mat4.multiply(modelMatrix, parentTransform.model, this.transform.model);
+
+    const material = new CustomMaterial(this.gl, shader);
+
+    material.setRender({
+      attributes: {
+        aVertexPosition: this.positionBuffer.buffer,
+      },
+      uniforms: {
+        uModelMatrix: modelMatrix,
+        uViewMatrix: viewMatrix,
+        uProjectionMatrix: projectionMatrix,
       },
     });
 

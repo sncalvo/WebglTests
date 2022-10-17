@@ -1,3 +1,5 @@
+precision mediump float;
+
 attribute vec3 aVertexPosition;
 attribute vec3 aVertexNormal;
 attribute vec2 aTextureCoord;
@@ -6,12 +8,16 @@ uniform mat4 uNormalMatrix;
 uniform mat4 uModelViewMatrix;
 uniform mat4 uProjectionMatrix;
 uniform mat4 uViewMatrix;
+uniform mat4 uTextureMatrix;
 
-varying highp vec2 vTextureCoord;
-varying highp vec3 vLighting;
+varying vec2 vTextureCoord;
+varying vec3 vLighting;
+varying vec4 vProjectedTexcoord;
 
 void main(void) {
-  gl_Position = uProjectionMatrix * uViewMatrix * uModelViewMatrix * vec4(aVertexPosition, 1.0);
+  vec4 worldPosition = uModelViewMatrix * vec4(aVertexPosition, 1.0);
+
+  gl_Position = uProjectionMatrix * uViewMatrix * worldPosition;
   vTextureCoord = aTextureCoord;
 
   // Apply lighting effect
@@ -22,4 +28,5 @@ void main(void) {
   highp float directional = max(dot(transformedNormal.xyz, directionalVector), 0.0);
 
   vLighting = ambientLight + (directionalLightColor * directional);
+  vProjectedTexcoord = uTextureMatrix * worldPosition;
 }

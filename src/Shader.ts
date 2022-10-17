@@ -1,3 +1,6 @@
+import vertexShadow from './shaders/shadow.vertex.glsl?raw';
+import fragmentShadow from './shaders/shadow.fragment.glsl?raw';
+
 class Shader {
   private program: WebGLProgram;
   private uniforms: {
@@ -15,6 +18,11 @@ class Shader {
 
   private gl: WebGLRenderingContext;
 
+  public static createShadowShader(gl: WebGLRenderingContext) {
+    const shader = new Shader(gl, vertexShadow, fragmentShadow);
+    return shader;
+  }
+
   constructor(gl: WebGLRenderingContext, vertexShaderSource: string, fragmentShaderSource: string) {
     this.gl = gl;
     this.program = this.initShaderProgram(vertexShaderSource, fragmentShaderSource)!;
@@ -25,6 +33,10 @@ class Shader {
   }
 
   public setUniform(name: string, value: any) {
+    if (!this.uniforms[name]) {
+      return;
+    }
+
     this.uniforms[name].value = value;
 
     try {
@@ -72,6 +84,10 @@ class Shader {
   }
 
   public setAttribute(name: string, value: any) {
+    if (!this.attributes[name]) {
+      return;
+    }
+
     this.attributes[name].value = value;
 
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.attributes[name].value);
